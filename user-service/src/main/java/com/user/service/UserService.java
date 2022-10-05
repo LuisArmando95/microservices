@@ -3,8 +3,8 @@ package com.user.service;
 import java.util.List;
 import java.util.Map;
 
-import com.user.models.Car;
-import com.user.models.Motorcycle;
+import com.user.models.Cellphone;
+import com.user.models.Laptop;
 import com.user.models.User;
 
 public interface UserService {
@@ -15,15 +15,15 @@ public interface UserService {
 
 	public User save(User user);
 
-	public List<Car> getCars(int userId); 
+	public List<Cellphone> getCellphones(int userId); 
 	  
-	public List<Motorcycle> getMotorcycles(int userId); 
+	public List<Laptop> getLaptops(int userId); 
 	
-	public Car saveCar(int userId, Car car);
+	public Cellphone saveCellphone(int userId, Cellphone cellphone);
 	
-	public Motorcycle saveMotorcycle(int userId, Motorcycle motorcycle);
+	public Laptop saveLaptop(int userId, Laptop laptop);
 	
-	public Map<String, Object> getUsersAndVehicles (int userId);
+	public Map<String, Object> getUsersAndEquipment (int userId);
 	
 
 }

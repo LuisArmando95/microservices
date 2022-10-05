@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.user.models.Car;
-import com.user.models.Motorcycle;
+import com.user.models.Cellphone;
+import com.user.models.Laptop;
 import com.user.models.User;
 import com.user.service.UserService;
 
@@ -48,43 +48,43 @@ public class UserController {
 		return ResponseEntity.ok(newUser);
 	}
 	
-	@GetMapping("/cars/{userId}")
-	public ResponseEntity<List<Car>> carsList(@PathVariable("userId") int id){
+	@GetMapping("/cellphones/{userId}")
+	public ResponseEntity<List<Cellphone>> cellphonesList(@PathVariable("userId") int id){
 		User user = userService.getUserById(id);
 		if(user == null) {
 			return ResponseEntity.notFound().build();
 		}
 		
-		List<Car> cars = userService.getCars(id);
-		return ResponseEntity.ok(cars);
+		List<Cellphone> cellphones = userService.getCellphones(id);
+		return ResponseEntity.ok(cellphones);
 	}
 	
-	@GetMapping("/motorcycles/{userId}")
-	public ResponseEntity<List<Motorcycle>> motorcyclesList(@PathVariable("userId") int id){
+	@GetMapping("/laptops/{userId}")
+	public ResponseEntity<List<Laptop>> laptopsList(@PathVariable("userId") int id){
 		User user = userService.getUserById(id);
 		if(user == null) {
 			return ResponseEntity.notFound().build();
 		}
 		
-		List<Motorcycle> motorcycles = userService.getMotorcycles(id);
-		return ResponseEntity.ok(motorcycles);
+		List<Laptop> laptops = userService.getLaptops(id);
+		return ResponseEntity.ok(laptops);
 	}
 	
-	@PostMapping("/car/{userId}")
-	public ResponseEntity<Car> saveCar(@PathVariable("userId") int userId,@RequestBody Car car){
-		Car newCar = userService.saveCar(userId, car);
-		return ResponseEntity.ok(newCar);
+	@PostMapping("/cellphone/{userId}")
+	public ResponseEntity<Cellphone> saveCellphone(@PathVariable("userId") int userId,@RequestBody Cellphone cellphone){
+		Cellphone newCellphone = userService.saveCellphone(userId, cellphone);
+		return ResponseEntity.ok(newCellphone);
 	} 
 	
-	@PostMapping("/moto/{userId}")
-	public ResponseEntity<Motorcycle> saveMotorcycle(@PathVariable("userId") int userId, @RequestBody Motorcycle motorcycle){
-		Motorcycle newMotorcycle = userService.saveMotorcycle(userId, motorcycle);
-		return ResponseEntity.ok(newMotorcycle);
+	@PostMapping("/laptop/{userId}")
+	public ResponseEntity<Laptop> saveMotorcycle(@PathVariable("userId") int userId, @RequestBody Laptop laptop){
+		Laptop newLaptop = userService.saveLaptop(userId, laptop);
+		return ResponseEntity.ok(newLaptop);
 	}
 	
 	@GetMapping("/everything/{userId}")
-	public ResponseEntity<Map<String, Object>> everyVehiclesByUserList(@PathVariable("userId") int userId){
-		Map<String,Object> result = userService.getUsersAndVehicles(userId);
+	public ResponseEntity<Map<String, Object>> everyEquipmentByUserList(@PathVariable("userId") int userId){
+		Map<String,Object> result = userService.getUsersAndEquipment(userId);
 		return ResponseEntity.ok(result);
 	}
 	

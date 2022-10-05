@@ -1,14 +1,14 @@
 package com.user.models;
 
 
-public class Car {
+public class Laptop {
+
 
 	private String brand;
 	
 	private String model;
 	
 	private int userId;
-	
 
 
 	public String getBrand() {
@@ -32,10 +32,7 @@ public class Car {
 	public void setModel(String model) {
 		this.model = model;
 	}
-
 	
-
-
 	public int getUserId() {
 		return userId;
 	}
@@ -48,8 +45,7 @@ public class Car {
 
 
 
-	public Car() {
+	public Laptop() {
 		super();
 	}
-
 }

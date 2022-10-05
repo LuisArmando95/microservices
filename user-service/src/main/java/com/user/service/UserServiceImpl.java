@@ -8,10 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import com.user.feignClients.CarFeignClient;
-import com.user.feignClients.MotorcycleFeignClient;
-import com.user.models.Car;
-import com.user.models.Motorcycle;
+import com.user.feignClients.CellphoneFeignClient;
+import com.user.feignClients.LaptopFeignClient;
+import com.user.models.Cellphone;
+import com.user.models.Laptop;
 import com.user.models.User;
 import com.user.repository.UserRepository;
 
@@ -25,10 +25,10 @@ public class UserServiceImpl implements UserService{
 	private UserRepository userRepository;
 
 	@Autowired
-	private CarFeignClient carFeignClient;
+	private CellphoneFeignClient cellphoneFeignClient;
 
 	@Autowired
-	private MotorcycleFeignClient motorcycleFeignClient;
+	private LaptopFeignClient laptopFeignClient;
 
 	public List<User> getAll() {
 		return userRepository.findAll();
@@ -44,59 +44,59 @@ public class UserServiceImpl implements UserService{
 	}
 
 	
-	public List<Car> getCars(int userId) { 
-		List<Car> cars = restTemplate.getForObject("http://localhost:8091/car/user/" + userId, List.class); 
-	  	return cars; 
+	public List<Cellphone> getCellphones(int userId) { 
+		List<Cellphone> cellphones = restTemplate.getForObject("http://localhost:8091/cellphone/user/" + userId, List.class); 
+	  	return cellphones; 
 	}
 	  
-	public List<Motorcycle> getMotorcycles(int userId) { 
-		List<Motorcycle> motorcycles = restTemplate.getForObject("http://localhost:8092/moto/user/" + userId, List.class); 
-		return motorcycles; 
+	public List<Laptop> getLaptops(int userId) { 
+		List<Laptop> laptops = restTemplate.getForObject("http://localhost:8092/laptop/user/" + userId, List.class); 
+		return laptops; 
 	}
 	
-	public Car saveCar(int userId, Car car) {
-		car.setUserId(userId);
-		Car newCar = carFeignClient.save(car);
-		return newCar;
+	public Cellphone saveCellphone(int userId, Cellphone cellphone) {
+		cellphone.setUserId(userId);
+		Cellphone newCellphone = cellphoneFeignClient.save(cellphone);
+		return newCellphone;
 	}
 	
-	public Motorcycle saveMotorcycle(int userId, Motorcycle motorcycle) {
-		motorcycle.setUserId(userId);
-		Motorcycle newMotorcycle = motorcycleFeignClient.save(motorcycle);
-		return newMotorcycle;
+	public Laptop saveLaptop(int userId, Laptop laptop) {
+		laptop.setUserId(userId);
+		Laptop newLaptop = laptopFeignClient.save(laptop);
+		return newLaptop;
 	}
 	
-	public Map<String, Object> getUsersAndVehicles (int userId) {
+	public Map<String, Object> getUsersAndEquipment (int userId) {
 		Map<String,Object> result = new HashMap<>();
 		User user = userRepository.findById(userId).orElse(null);
 		
 		if(user == null) {
-			result.put("Message", "El usuario no existe");
+			result.put("Message", "User doesnt exist.");
 			return result;
 		}
 		
 		result.put("User",user);
-		List<Car> cars = carFeignClient.getCars(userId);
-		if(cars == null) {
-			result.put("Cars", "The user dont have a car.");
+		List<Cellphone> cellphones = cellphoneFeignClient.getCellphones(userId);
+		if(cellphones == null) {
+			result.put("Cellphone", "The user dont have a cellphone.");
 		} else {
-			if(cars.isEmpty()) {
-				result.put("Cars", "The user dont have a car.");
+			if(cellphones.isEmpty()) {
+				result.put("Cellphone", "The user dont have a cellphone.");
 			}
 			else {
-				result.put("Cars", cars);
+				result.put("Cellphone", cellphones);
 			}
 		}
 		
-		List<Motorcycle> motorcycles = motorcycleFeignClient.getMotos(userId);
-		if(motorcycles == null) {
-			result.put("Motorcycles", "The user dont have a motorcycle.");
+		List<Laptop> laptops = laptopFeignClient.getLaptops(userId);
+		if(laptops == null) {
+			result.put("Laptops", "The user dont have a laptop.");
 		} else {
-			if(motorcycles.isEmpty()) {
-				result.put("Motorcycles", "The user dont have a motorcycle.");
+			if(laptops.isEmpty()) {
+				result.put("Laptops", "The user dont have a laptop.");
 			}		
 			else {
-				result.put("Motorcycles", motorcycles);
+				result.put("Laptops", laptops);
 			}
 		}
 	
